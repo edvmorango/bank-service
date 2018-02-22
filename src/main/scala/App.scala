@@ -1,6 +1,7 @@
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.{Controller, HttpServer}
 import com.twitter.finatra.http.routing.HttpRouter
+import persistence.PostgresDB
 
 object BankMain extends BankHttpServer
 
