@@ -16,13 +16,13 @@ class BankHttpServer extends HttpServer {
 
   override def configureHttp(router: HttpRouter): Unit = {
 
-    router.add[TestControler]
+    router.add[TestController]
 
   }
 
 }
 
-class TestControler extends Controller {
+class TestController extends Controller {
 
   get("/") { req: Request =>
     val client = Client(name = "José Eduardo")
