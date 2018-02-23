@@ -1,0 +1,7 @@
+CREATE DATABASE bank;
+
+CREATE TABLE BNK_CLIENT (
+     client_id SERIAL PRIMARY KEY,
+     client_name TEXT NOT NULL
+);
+

@@ -3,7 +3,7 @@ name := "bank-service"
 version := "0.1"
 
 scalaVersion := "2.12.4"
-scalacOptions += "-target:jvm-1.8"
+javacOptions in (Compile, compile) ++= Seq("--release", "9") ++ Seq("--add-modules=java.activation")
 
 
 resolvers ++= Seq("twttr" at "https://maven.twttr.com/",
