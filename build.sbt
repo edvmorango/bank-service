@@ -5,10 +5,13 @@ version := "0.1"
 scalaVersion := "2.12.4"
 javacOptions in (Compile, compile) ++= Seq("--release", "9") ++ Seq("--add-modules=java.activation")
 crossScalaVersions := Seq("2.11.11", "2.12.4")
+testOptions += Tests.Argument(TestFrameworks.JUnit, "-q", "-v", "-s", "-a")
 
 
 resolvers ++= Seq("twttr" at "https://maven.twttr.com/",
               "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/releases/")
+
+
 
 libraryDependencies ++= Seq(
   "com.twitter" %% "finatra-http" % "18.2.0",
@@ -31,6 +34,9 @@ libraryDependencies ++= Seq(
   "com.twitter" %% "inject-server" % "18.2.0" % "test"  classifier "tests",
 
   "com.google.inject.extensions" % "guice-testlib" % "4.0" % "test",
+
+  "com.typesafe.slick" %% "slick-testkit" % "3.2.1" % "test",
+  "br.com.six2six" % "fixture-factory" % "3.1.0" % "test",
 
   "org.mockito" % "mockito-core" % "1.9.5" % "test", // Feature tests don't work with mockito 2
   "org.scalatest" %% "scalatest" % "3.0.4" % "test",
