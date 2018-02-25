@@ -22,6 +22,7 @@ libraryDependencies ++= Seq(
   "com.twitter" %% "inject-server" % "18.2.0" % "test",
   "com.twitter" %% "inject-utils" % "18.2.0" % "test",
 
+  "org.typelevel" %% "cats-core" % "1.0.1",
   "com.jakehschwartz" % "finatra-swagger_2.12" % "17.12.0",
   "org.postgresql" % "postgresql" % "9.4.1208",
   "com.typesafe.slick" %% "slick" % "3.2.1",

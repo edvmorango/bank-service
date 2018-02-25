@@ -1,12 +1,9 @@
+import com.google.inject.Inject
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.{Controller, HttpServer}
 import com.twitter.finatra.http.routing.HttpRouter
-import domain.User
-import persistence.repository.ClientRepositoryImpl
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import util.TwitterFutureSyntax
-import util.TwitterFutureSyntax.RichSFuture
+import domain.{User}
+import service.UserServiceImpl
 
 object BankMain extends BankHttpServer
 
@@ -22,15 +19,9 @@ class BankHttpServer extends HttpServer {
 
 }
 
-class TestController extends Controller {
-
+class TestController @Inject()(service: UserServiceImpl) extends Controller {
   get("/") { req: Request =>
-    val client = User(name = "José Eduardo")
-
-    val rep = new ClientRepositoryImpl()
-
-    rep.create(client).asTwitter
-
+    val user = User(name = "Kovacs")
+    service.create(user).value
   }
-
 }

@@ -1,5 +1,7 @@
 package util
 
+import cats.data.{EitherT, OptionT}
+
 object TwitterFutureSyntax {
 
   import com.twitter.util.{
@@ -37,6 +39,18 @@ object TwitterFutureSyntax {
       }
 
       p
+    }
+  }
+
+  implicit class TFEitherT[L, R](f: SFuture[Either[L, R]]) {
+    def asTFEitherT(implicit e: ExecutionContext): EitherT[TFuture, L, R] = {
+      EitherT(f.asTwitter)
+    }
+  }
+
+  implicit class TFOptionT[A](f: SFuture[Option[A]]) {
+    def asTFOptionT(implicit e: ExecutionContext): OptionT[TFuture, A] = {
+      OptionT(f.asTwitter)
     }
   }
 
