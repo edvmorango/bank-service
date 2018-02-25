@@ -1,21 +1,21 @@
 package persistence
 
-import domain.Client
+import domain.User
 import slick.lifted.{TableQuery, Tag}
 import slick.jdbc.PostgresProfile.api._
 
-object ClientTable {
+object UserTable {
 
-  val query = TableQuery[ClientTable]
+  val query = TableQuery[UserTable]
 
 }
 
-class ClientTable(tag: Tag) extends Table[Client](tag, "bnk_client") {
+class UserTable(tag: Tag) extends Table[User](tag, "bnk_user") {
 
-  def id = column[Long]("client_id", O.PrimaryKey, O.AutoInc)
+  def id = column[Long]("user_id", O.PrimaryKey, O.AutoInc)
 
-  def name = column[String]("client_name")
+  def name = column[String]("user_name")
 
-  def * = (id.?, name) <> (Client.tupled, Client.unapply)
+  def * = (id.?, name) <> (User.tupled, User.unapply)
 
 }

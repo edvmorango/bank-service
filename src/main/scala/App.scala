@@ -1,7 +1,7 @@
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.{Controller, HttpServer}
 import com.twitter.finatra.http.routing.HttpRouter
-import domain.Client
+import domain.User
 import persistence.repository.ClientRepositoryImpl
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -25,7 +25,7 @@ class BankHttpServer extends HttpServer {
 class TestController extends Controller {
 
   get("/") { req: Request =>
-    val client = Client(name = "José Eduardo")
+    val client = User(name = "José Eduardo")
 
     val rep = new ClientRepositoryImpl()
 
