@@ -2,8 +2,10 @@ import com.google.inject.Inject
 import com.twitter.finagle.http.Request
 import com.twitter.finatra.http.{Controller, HttpServer}
 import com.twitter.finatra.http.routing.HttpRouter
-import domain.{User}
+import domain.User
 import service.UserServiceImpl
+import util.TwitterInstances._
+import com.twitter.util.Future
 
 object BankMain extends BankHttpServer
 
@@ -12,9 +14,7 @@ class BankHttpServer extends HttpServer {
   override def defaultFinatraHttpPort = ":8001"
 
   override def configureHttp(router: HttpRouter): Unit = {
-
     router.add[TestController]
-
   }
 
 }
@@ -22,6 +22,10 @@ class BankHttpServer extends HttpServer {
 class TestController @Inject()(service: UserServiceImpl) extends Controller {
   get("/") { req: Request =>
     val user = User(name = "Kovacs")
-    service.create(user).value
+
+    service
+      .create(user)
+      .fold(l => l.getMessage, r => r)
   }
+
 }
