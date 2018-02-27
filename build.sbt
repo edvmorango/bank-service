@@ -37,7 +37,6 @@ libraryDependencies ++= Seq(
   "com.google.inject.extensions" % "guice-testlib" % "4.0" % "test",
 
   "com.typesafe.slick" %% "slick-testkit" % "3.2.1" % "test",
-  "br.com.six2six" % "fixture-factory" % "3.1.0" % "test",
 
   "org.mockito" % "mockito-core" % "1.9.5" % "test", // Feature tests don't work with mockito 2
   "org.scalatest" %% "scalatest" % "3.0.4" % "test",
