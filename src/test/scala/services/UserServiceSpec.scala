@@ -60,13 +60,13 @@ class UserServiceSpec
 
     }
 
-    "user cash out" in {
+    "user draws money" in {
 
       fail()
 
     }
 
-    "user do bank trasnfer" in {
+    "user do bank transfer" in {
 
       fail()
 
