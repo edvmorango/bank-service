@@ -54,6 +54,42 @@ class UserServiceSpec
 
     }
 
+    "bind user to account" in {
+
+      fail()
+
+    }
+
+    "user cash out" in {
+
+      fail()
+
+    }
+
+    "user do bank trasnfer" in {
+
+      fail()
+
+    }
+
+    "find user accounts" in {
+
+      fail()
+
+    }
+
+    "find user account balance" in {
+
+      fail()
+
+    }
+
+    "find user total balance" in {
+
+      fail()
+
+    }
+
   }
 
 }
