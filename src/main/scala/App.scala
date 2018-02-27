@@ -4,7 +4,7 @@ import com.twitter.finatra.http.{Controller, HttpServer}
 import com.twitter.finatra.http.routing.HttpRouter
 import domain.User
 import service.UserServiceImpl
-import util.TwitterInstances._
+import util.TwitterFutureInstances._
 import com.twitter.util.Future
 
 object BankMain extends BankHttpServer

@@ -3,7 +3,7 @@ package util
 import cats.{Alternative, Functor}
 import com.twitter.util.Future
 
-object TwitterInstances {
+object TwitterFutureInstances {
 
   implicit val twitterFutureInstance: Functor[Future] = {
     new Functor[Future] {

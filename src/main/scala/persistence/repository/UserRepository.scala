@@ -1,6 +1,7 @@
 package persistence.repository
 
 import cats.data.EitherT
+import com.google.inject.ImplementedBy
 import domain.User
 import persistence.{PostgresDB, UserTable}
 import slick.jdbc.PostgresProfile.api._

@@ -1,22 +1,57 @@
 package services
 
+import com.twitter.util.{Await, Duration, Future}
 import domain.User
 import fixtures.UserFixture
-import org.scalatest.{BeforeAndAfterAll, FunSpec, MustMatchers, WordSpec}
+import org.scalamock.scalatest.{AsyncMockFactory, MockFactory}
+import org.scalatest.mockito.MockitoSugar
+import org.scalatest.{AsyncWordSpec, BeforeAndAfterAll, MustMatchers, WordSpec}
+import persistence.repository.UserRepositoryImpl
+import service.{UserService, UserServiceImpl}
+import util.TwitterFutureInstances._
+import util.TwitterFutureSyntax._
 
 class UserServiceSpec
-    extends WordSpec
+    extends AsyncWordSpec
     with MustMatchers
-    with BeforeAndAfterAll {
+    with AsyncMockFactory {
 
   "User service" should {
+
     "create a User " in {
 
-      true mustBe true
+      val userRepository = mock[UserRepositoryImpl]
+      val newUser = UserFixture.getUser
+      val id = Some(1L)
+
+      val userRepositoryCreate =
+        scala.concurrent.Future[Either[Throwable, User]] {
+          Right(User(id, "Kovacs"))
+        }
+
+      (userRepository.create _) expects (newUser) returning userRepositoryCreate
+
+      val userService = new UserServiceImpl(userRepository)
+
+      userService
+        .create(newUser)
+        .map(u => u mustBe User(id, "Kovacs"))
+        .getOrElse(fail())
+        .asScala
     }
 
-    "get a user by Id" in {
-      true mustBe true
+    "find a user by Id" in {
+
+      val userRepository = mock[UserRepositoryImpl]
+      val user = UserFixture.getUserWithId
+      val userRepositoryFindById = scala.concurrent.Future { Some(user) }
+
+      (userRepository.findById _) expects (1L) returning userRepositoryFindById
+
+      val userService = new UserServiceImpl(userRepository)
+
+      userService.findById(1L).map(u => u mustBe user).value.asScala.map(_.get)
+
     }
 
   }

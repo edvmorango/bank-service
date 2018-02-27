@@ -38,6 +38,7 @@ libraryDependencies ++= Seq(
 
   "com.typesafe.slick" %% "slick-testkit" % "3.2.1" % "test",
 
+  "org.scalamock" %% "scalamock" % "4.1.0" % "test",
   "org.mockito" % "mockito-core" % "1.9.5" % "test", // Feature tests don't work with mockito 2
   "org.scalatest" %% "scalatest" % "3.0.4" % "test",
   "org.scalacheck" %% "scalacheck" % "1.13.4" % "test"
