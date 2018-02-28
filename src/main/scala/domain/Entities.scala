@@ -6,7 +6,7 @@ import EntityType.Id
 
 case class User(id: Id = None, name: String)
 
-case class Account(id: Id = None, account: Int)
+case class Account(id: Id = None, account: Long)
 
 case class UserAccount(id: Id = None, userId: Long, accountId: Long)
 
@@ -20,4 +20,4 @@ case class Transaction(id: Id = None,
                        accountId: Long,
                        transactionTypeId: Long,
                        transactionStatusId: Long,
-                       transactionUserId: Option[Long])
+                       transactionUserId: Option[Long] = None)

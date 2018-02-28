@@ -34,7 +34,7 @@ CREATE TABLE BNK_TRANSACTION(
     transaction_date TIMESTAMP DEFAULT NOW(),
     transaction_account_id INTEGER NOT NULL REFERENCES BNK_ACCOUNT (account_id),
     transaction_type_id INTEGER NOT NULL REFERENCES  BNK_TRANSACTION_TYPE (transaction_type_id),
-    transaction_status INTEGER NOT NULL REFERENCES BNK_TRANSACTION_STATUS (transaction_status_id),
+    transaction_status_id INTEGER NOT NULL REFERENCES BNK_TRANSACTION_STATUS (transaction_status_id),
     transaction_user_id INTEGER REFERENCES BNK_USER (user_id)
 );
 
