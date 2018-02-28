@@ -4,8 +4,9 @@ import com.twitter.finatra.http.{Controller, HttpServer}
 import com.twitter.finatra.http.routing.HttpRouter
 import domain.User
 import service.UserServiceImpl
-import util.TwitterFutureInstances._
-import com.twitter.util.Future
+import util.FutureInstances._
+import util.TwitterFutureSyntax.RichSFuture
+import scala.concurrent.ExecutionContext.Implicits.global
 
 object BankMain extends BankHttpServer
 
@@ -26,6 +27,7 @@ class TestController @Inject()(service: UserServiceImpl) extends Controller {
     service
       .create(user)
       .fold(l => l.getMessage, r => r)
+      .asTwitter
   }
 
 }

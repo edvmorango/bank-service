@@ -1,15 +1,12 @@
 package services
 
-import com.twitter.util.{Await, Duration, Future}
 import domain.User
 import fixtures.UserFixture
-import org.scalamock.scalatest.{AsyncMockFactory, MockFactory}
-import org.scalatest.mockito.MockitoSugar
-import org.scalatest.{AsyncWordSpec, BeforeAndAfterAll, MustMatchers, WordSpec}
+import org.scalamock.scalatest.{AsyncMockFactory}
+import org.scalatest.{AsyncWordSpec, MustMatchers}
 import persistence.repository.UserRepositoryImpl
-import service.{UserService, UserServiceImpl}
-import util.TwitterFutureInstances._
-import util.TwitterFutureSyntax._
+import service.{UserServiceImpl}
+import util.FutureInstances._
 
 class UserServiceSpec
     extends AsyncWordSpec
@@ -37,7 +34,7 @@ class UserServiceSpec
         .create(newUser)
         .map(u => u mustBe User(id, "Kovacs"))
         .getOrElse(fail())
-        .asScala
+
     }
 
     "find a user by Id" in {
@@ -50,7 +47,7 @@ class UserServiceSpec
 
       val userService = new UserServiceImpl(userRepository)
 
-      userService.findById(1L).map(u => u mustBe user).value.asScala.map(_.get)
+      userService.findById(1L).map(u => u mustBe user).value.map(_.get)
 
     }
 

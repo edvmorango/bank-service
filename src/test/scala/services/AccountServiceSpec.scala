@@ -18,6 +18,10 @@ class AccountServiceSpec
       fail()
     }
 
+    "find account balance" in {
+      fail()
+    }
+
     "bind a new user to account" in {
       fail()
     }
