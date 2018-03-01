@@ -1,11 +1,11 @@
 package persistence
 
 import java.time.LocalDateTime
-
 import domain._
+import persistence.repository.SlickMapping.localDateToDate
 import slick.lifted.{TableQuery, Tag}
 import slick.jdbc.PostgresProfile.api._
-import slick.ast.TypedType
+
 object UserTable {
 
   val query = TableQuery[UserTable]
@@ -71,8 +71,6 @@ class TransactionStatusTable(tag: Tag)
 
 class TransactionTable(tag: Tag)
     extends Table[Transaction](tag, "bnk_transaction") {
-
-  import persistence.repository.SlickMapping.localDateToDate
 
   def id = column[Long]("transaction_id", O.PrimaryKey, O.AutoInc)
 
