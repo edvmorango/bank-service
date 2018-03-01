@@ -2,7 +2,7 @@ package persistence
 
 import java.time.LocalDateTime
 import domain._
-import persistence.repository.SlickMapping.localDateToDate
+import SlickMapping.localDateToDate
 import slick.lifted.{TableQuery, Tag}
 import slick.jdbc.PostgresProfile.api._
 
@@ -22,6 +22,12 @@ class UserTable(tag: Tag) extends Table[User](tag, "bnk_user") {
 
 }
 
+object AccountTable {
+
+  val query = TableQuery[AccountTable]
+
+}
+
 class AccountTable(tag: Tag) extends Table[Account](tag, "bnk_account") {
 
   def id = column[Long]("account_id", O.PrimaryKey, O.AutoInc)
@@ -29,6 +35,12 @@ class AccountTable(tag: Tag) extends Table[Account](tag, "bnk_account") {
   def account = column[Long]("account_account")
 
   def * = (id.?, account) <> (Account.tupled, Account.unapply)
+
+}
+
+object UserAccountTable {
+
+  val query = TableQuery[UserAccountTable]
 
 }
 
@@ -45,6 +57,12 @@ class UserAccountTable(tag: Tag)
 
 }
 
+object TransactionTypeTable {
+
+  val query = TableQuery[TransactionTypeTable]
+
+}
+
 class TransactionTypeTable(tag: Tag)
     extends Table[TransactionType](tag, "bnk_transaction_type") {
 
@@ -57,6 +75,12 @@ class TransactionTypeTable(tag: Tag)
 
 }
 
+object TransactionStatusTable {
+
+  val query = TableQuery[TransactionStatusTable]
+
+}
+
 class TransactionStatusTable(tag: Tag)
     extends Table[TransactionStatus](tag, "bnk_transaction_status") {
 
@@ -66,6 +90,12 @@ class TransactionStatusTable(tag: Tag)
 
   def * =
     (id.?, description) <> (TransactionStatus.tupled, TransactionStatus.unapply)
+
+}
+
+object TransactionTable {
+
+  val query = TableQuery[TransactionTable]
 
 }
 

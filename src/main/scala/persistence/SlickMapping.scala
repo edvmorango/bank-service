@@ -1,8 +1,7 @@
-package persistence.repository
+package persistence
 
-import java.sql
-import java.time.{LocalDate, LocalDateTime, ZoneId, ZoneOffset}
-import java.sql.{Date, Timestamp}
+import java.sql.Timestamp
+import java.time.LocalDateTime
 
 import slick.jdbc.PostgresProfile.api._
 
