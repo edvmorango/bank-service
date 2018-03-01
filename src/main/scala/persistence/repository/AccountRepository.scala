@@ -1,31 +1,31 @@
 package persistence.repository
 
-import domain.User
-import persistence.{PostgresDB, UserTable}
+import domain.Account
+import persistence.{AccountTable, PostgresDB}
 import slick.jdbc.PostgresProfile.api._
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
-trait UserRepository extends {
+trait AccountRepository extends {
 
-  def findById(id: Long): Future[Option[User]]
+  def findById(id: Long): Future[Option[Account]]
 
-  def create(obj: User): Future[Either[Throwable, User]]
+  def create(obj: Account): Future[Either[Throwable, Account]]
 
 }
 
-class UserRepositoryImpl extends UserRepository {
+class AccountRepositoryImpl extends AccountRepository {
 
   private val db = PostgresDB.db
-  private val userQuery = UserTable.query
+  private val accountQuery = AccountTable.query
 
-  override def findById(id: Long): Future[Option[User]] =
-    db.run(userQuery.filter(_.id === id).result.headOption)
+  override def findById(id: Long): Future[Option[Account]] =
+    db.run(accountQuery.filter(_.id === id).result.headOption)
 
-  override def create(obj: User): Future[Either[Throwable, User]] = {
+  override def create(obj: Account): Future[Either[Throwable, Account]] = {
     db.run {
-        (userQuery returning userQuery.map(_.id) into (
+        (accountQuery returning accountQuery.map(_.id) into (
             (c,
              id) => c.copy(id = Some(id))) += obj).map(Right(_))
       }
