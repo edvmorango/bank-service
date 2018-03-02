@@ -52,39 +52,34 @@ class UserServiceSpec
     }
 
     "bind user to account" in {
-
-      fail()
-
+      ???
     }
 
     "user draws money" in {
 
-      fail()
+      ???
 
     }
 
     "user do bank transfer" in {
 
-      fail()
+      ???
 
     }
 
     "find user accounts" in {
 
-      fail()
-
+      ???
     }
 
     "find user account balance" in {
 
-      fail()
-
+      ???
     }
 
     "find user total balance" in {
 
-      fail()
-
+      ???
     }
 
   }

@@ -11,27 +11,27 @@ class TransactionServiceSpec
   "Transaction Service" should {
 
     "approve pending transaction " in {
-      fail()
+      ???
     }
 
     "reprove pending transaction" in {
-      fail()
+      ???
     }
 
     "block transaction" in {
-      fail()
+      ???
     }
 
     "reverse transaction" in {
-      fail()
+      ???
     }
 
     "find transactions by account" in {
-      fail()
+      ???
     }
 
-    "find transactions by user" {
-      fail()
+    "find transactions by user" in {
+      ???
     }
 
   }

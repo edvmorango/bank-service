@@ -1,5 +1,7 @@
 package util
 
+import cats.Monad
+
 object FutureInstances {
 
   import cats.{Functor}
