@@ -1,12 +1,15 @@
 package services
 
+import cats.data.{EitherT, OptionT}
 import domain.User
 import fixtures.UserFixture
-import org.scalamock.scalatest.{AsyncMockFactory}
+import org.scalamock.scalatest.AsyncMockFactory
 import org.scalatest.{AsyncWordSpec, MustMatchers}
 import persistence.repository.UserRepositoryImpl
-import service.{UserServiceImpl}
-import util.FutureInstances._
+import service.UserServiceImpl
+import cats.implicits.catsStdInstancesForFuture
+
+import scala.concurrent.Future
 
 class UserServiceSpec
     extends AsyncWordSpec
@@ -22,9 +25,9 @@ class UserServiceSpec
       val id = Some(1L)
 
       val userRepositoryCreate =
-        scala.concurrent.Future[Either[Throwable, User]] {
+        EitherT[Future, Throwable, User](Future[Either[Throwable, User]] {
           Right(User(id, "Kovacs"))
-        }
+        })
 
       (userRepository.create _) expects (newUser) returning userRepositoryCreate
 
@@ -41,7 +44,7 @@ class UserServiceSpec
 
       val userRepository = mock[UserRepositoryImpl]
       val user = UserFixture.getUserWithId
-      val userRepositoryFindById = scala.concurrent.Future { Some(user) }
+      val userRepositoryFindById = OptionT[Future, User](Future(Some(user)))
 
       (userRepository.findById _) expects (1L) returning userRepositoryFindById
 

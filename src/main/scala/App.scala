@@ -4,9 +4,9 @@ import com.twitter.finatra.http.{Controller, HttpServer}
 import com.twitter.finatra.http.routing.HttpRouter
 import domain.User
 import service.UserServiceImpl
-import util.FutureInstances._
 import util.TwitterFutureSyntax.RichSFuture
 import scala.concurrent.ExecutionContext.Implicits.global
+import cats.implicits.catsStdInstancesForFuture
 
 object BankMain extends BankHttpServer
 

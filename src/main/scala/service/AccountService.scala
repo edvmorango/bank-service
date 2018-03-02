@@ -7,7 +7,6 @@ import scala.concurrent.Future
 import domain.{Account, User, UserAccount}
 import persistence.repository.AccountRepositoryImpl
 import cats.implicits.catsStdInstancesForFuture
-
 import scala.concurrent.ExecutionContext.Implicits.global
 
 trait AccountService {
@@ -28,14 +27,14 @@ class AccountServiceImpl @Inject()(accountRep: AccountRepositoryImpl,
   def create(account: Account,
              user: User): EitherT[Future, Throwable, Account] = {
     for {
-      account <- EitherT(accountRep.create(account))
+      account <- accountRep.create(account)
       binded <- bindUser(account.id.get, user.id.get)
     } yield account
 
   }
 
   def findById(id: Long): OptionT[Future, Account] =
-    OptionT.apply(accountRep.findById(id))
+    accountRep.findById(id)
 
   def bindUser(accountId: Long, userId: Long) = {
 
@@ -49,7 +48,7 @@ class AccountServiceImpl @Inject()(accountRep: AccountRepositoryImpl,
         throw new Throwable("account"))
 
       usrAcc = UserAccount(None, user.id.get, account.id.get)
-      userAccount <- EitherT.apply(accountRep.bindUser(usrAcc))
+      userAccount <- accountRep.bindUser(usrAcc)
     } yield userAccount
   }
 

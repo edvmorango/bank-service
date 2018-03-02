@@ -17,9 +17,9 @@ class UserServiceImpl @Inject()(userRep: UserRepositoryImpl)
     extends UserService {
 
   override def create(user: User): EitherT[Future, Throwable, User] =
-    EitherT.apply(userRep.create(user))
+    userRep.create(user)
 
   override def findById(id: Long): OptionT[Future, User] =
-    OptionT.apply(userRep.findById(id))
+    userRep.findById(id)
 
 }

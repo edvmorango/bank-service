@@ -15,10 +15,4 @@ object FutureInstances {
     }
   }
 
-  implicit val scalaFutureInstance: Functor[SFuture] = {
-    new Functor[SFuture] {
-      override def map[A, B](fa: SFuture[A])(f: A => B): SFuture[B] = fa.map(f)
-    }
-  }
-
 }
