@@ -60,7 +60,26 @@ class AccountServiceSpec
     }
 
     "find account by id" in {
-      ???
+
+      val accountRepository = mock[AccountRepositoryImpl]
+
+      val account = AccountFixture.getAccount
+
+      val returnedAccount = Future(Option(account.copy(id = Some(1L))))
+
+      (accountRepository.findById _) expects (1L) returning
+        returnedAccount.asMTransformer()
+
+      val userService = mock[UserServiceImpl]
+
+      val accountService =
+        new AccountServiceImpl(accountRepository, userService)
+
+      accountService
+        .findById(1L)
+        .map(a => a mustBe account.copy(id = Some(1L)))
+        .getOrElse(fail())
+
     }
 
     "find account balance" in {
