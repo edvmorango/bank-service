@@ -7,7 +7,7 @@ import org.scalamock.scalatest.AsyncMockFactory
 import org.scalatest.{AsyncWordSpec, MustMatchers}
 import persistence.repository.{AccountRepositoryImpl, UserRepositoryImpl}
 import service.{AccountServiceImpl, UserServiceImpl}
-
+import util.MonadTransformersSyntax._
 import scala.concurrent.Future
 import cats.implicits.catsStdInstancesForFuture
 
@@ -35,20 +35,17 @@ class AccountServiceSpec
 
       val createdUserAccount = Future(Right(userAccount.copy(id = Option(1L))))
 
-      (accountRepository.create _) expects (account) returning EitherT[
-        Future,
-        Throwable,
-        Account](insertedAccount)
+      (accountRepository.create _) expects (account) returning insertedAccount
+        .asMTransformer()
 
-      (userRepository.findById _) expects (1L) returning OptionT[Future, User](
-        foundUser)
-      (accountRepository.findById _) expects (1L) returning OptionT[Future,
-                                                                    Account](
-        foundAccount)
-      (accountRepository.bindUser _) expects * returning EitherT[Future,
-                                                                 Throwable,
-                                                                 UserAccount](
-        createdUserAccount)
+      (userRepository.findById _) expects (1L) returning
+        foundUser.asMTransformer()
+
+      (accountRepository.findById _) expects (1L) returning
+        foundAccount.asMTransformer()
+
+      (accountRepository.bindUser _) expects * returning
+        createdUserAccount.asMTransformer()
 
       val userService = new UserServiceImpl(userRepository)
 

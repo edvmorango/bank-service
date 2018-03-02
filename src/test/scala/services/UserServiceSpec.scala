@@ -8,6 +8,7 @@ import org.scalatest.{AsyncWordSpec, MustMatchers}
 import persistence.repository.UserRepositoryImpl
 import service.UserServiceImpl
 import cats.implicits.catsStdInstancesForFuture
+import util.MonadTransformersSyntax._
 
 import scala.concurrent.Future
 
@@ -25,11 +26,10 @@ class UserServiceSpec
       val id = Some(1L)
 
       val userRepositoryCreate =
-        EitherT[Future, Throwable, User](Future[Either[Throwable, User]] {
-          Right(User(id, "Kovacs"))
-        })
+        Future(Right(User(id, "Kovacs")))
 
       (userRepository.create _) expects (newUser) returning userRepositoryCreate
+        .asMTransformer()
 
       val userService = new UserServiceImpl(userRepository)
 
@@ -44,9 +44,10 @@ class UserServiceSpec
 
       val userRepository = mock[UserRepositoryImpl]
       val user = UserFixture.getUserWithId
-      val userRepositoryFindById = OptionT[Future, User](Future(Some(user)))
+      val userRepositoryFindById = (Future(Some(user)))
 
       (userRepository.findById _) expects (1L) returning userRepositoryFindById
+        .asMTransformer()
 
       val userService = new UserServiceImpl(userRepository)
 
