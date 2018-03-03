@@ -5,11 +5,7 @@ import com.google.inject.Inject
 
 import scala.concurrent.Future
 import domain.User
-import persistence.repository.{
-  AccountRepository,
-  UserRepository,
-  UserRepositoryImpl
-}
+import persistence.repository.{UserRepository}
 
 trait UserService {
 

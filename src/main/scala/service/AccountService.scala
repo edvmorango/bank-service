@@ -5,7 +5,7 @@ import com.google.inject.Inject
 
 import scala.concurrent.Future
 import domain.{Account, User, UserAccount}
-import persistence.repository.{AccountRepository, AccountRepositoryImpl}
+import persistence.repository.{AccountRepository}
 import cats.implicits.catsStdInstancesForFuture
 
 import scala.concurrent.ExecutionContext.Implicits.global
