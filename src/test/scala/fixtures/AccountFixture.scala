@@ -4,6 +4,6 @@ import domain.Account
 
 object AccountFixture {
 
-  def getAccount = Account(None, 12342626)
+  val getAccount = Account(None, 12342626)
 
 }

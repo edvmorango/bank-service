@@ -4,7 +4,7 @@ import domain.User
 
 object UserFixture {
 
-  def getUser = User(None, "Kovac")
-  def getUserWithId = getUser.copy(Some(1L))
+  val getUser = User(None, "Kovac")
+  val getUserWithId = getUser.copy(Some(1L))
 
 }
