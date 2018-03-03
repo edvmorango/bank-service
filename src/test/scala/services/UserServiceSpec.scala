@@ -55,10 +55,6 @@ class UserServiceSpec
 
     }
 
-    "bind user to account" in {
-      ???
-    }
-
     "user draws money" in {
 
       ???
