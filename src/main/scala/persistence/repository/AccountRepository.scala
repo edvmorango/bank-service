@@ -17,6 +17,8 @@ trait AccountRepository extends {
 
   def bindUser(obj: UserAccount): EitherT[Future, Throwable, UserAccount]
 
+  def findUserAccounts(userId: Long): Future[Seq[Account]]
+
 }
 
 class AccountRepositoryImpl extends AccountRepository {
@@ -48,6 +50,16 @@ class AccountRepositoryImpl extends AccountRepository {
       .recover { case e: Throwable => Left(e) }
       .asMTransformer()
 
+  }
+
+  def findUserAccounts(userId: Long) = {
+
+    val query
+      : Query[(AccountTable, UserAccountTable), (Account, UserAccount), Seq] =
+      accountQuery join userAccountQuery
+        .filter(_.userId === userId) on (_.id === _.accountId)
+
+    db.run(query.map(_._1).result)
   }
 
 }

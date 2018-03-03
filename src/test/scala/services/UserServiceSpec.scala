@@ -71,11 +71,6 @@ class UserServiceSpec
 
     }
 
-    "find user accounts" in {
-
-      ???
-    }
-
     "find user account balance" in {
 
       ???

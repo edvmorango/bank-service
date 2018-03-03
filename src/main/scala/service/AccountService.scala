@@ -5,8 +5,9 @@ import com.google.inject.Inject
 
 import scala.concurrent.Future
 import domain.{Account, User, UserAccount}
-import persistence.repository.AccountRepositoryImpl
+import persistence.repository.{AccountRepository, AccountRepositoryImpl}
 import cats.implicits.catsStdInstancesForFuture
+
 import scala.concurrent.ExecutionContext.Implicits.global
 
 trait AccountService {
@@ -18,9 +19,11 @@ trait AccountService {
   def bindUser(accountId: Long,
                userId: Long): EitherT[Future, Throwable, UserAccount]
 
+  def findUserAccounts(userId: Long): Future[Seq[Account]]
+
 }
 
-class AccountServiceImpl @Inject()(accountRep: AccountRepositoryImpl,
+class AccountServiceImpl @Inject()(accountRep: AccountRepository,
                                    userService: UserService)
     extends AccountService {
 
@@ -50,6 +53,13 @@ class AccountServiceImpl @Inject()(accountRep: AccountRepositoryImpl,
       usrAcc = UserAccount(None, user.id.get, account.id.get)
       userAccount <- accountRep.bindUser(usrAcc)
     } yield userAccount
+  }
+
+  def findUserAccounts(userId: Long) = {
+    for {
+      _ <- userService.findById(userId).value
+      accounts <- accountRep.findUserAccounts(userId)
+    } yield accounts
   }
 
 }

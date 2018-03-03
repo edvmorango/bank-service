@@ -122,6 +122,35 @@ class AccountServiceSpec
 
     }
 
+    "find user accounts" in {
+
+      val userRepository = mock[UserRepositoryImpl]
+      val accountRepository = mock[AccountRepositoryImpl]
+
+      val user = UserFixture.getUserWithId
+      val accounts = AccountFixture.getAccounts
+
+      val foundUser = Future(Option(user))
+      val foundAccounts = Future(accounts)
+
+      val userAccount = new UserAccount(None, 1L, 1L)
+
+      (userRepository.findById _) expects (1L) returning foundUser
+        .asMTransformer()
+
+      (accountRepository.findUserAccounts _) expects (1L) returning foundAccounts
+
+      val userService = new UserServiceImpl(userRepository)
+
+      val accountService =
+        new AccountServiceImpl(accountRepository, userService)
+
+      accountService
+        .findUserAccounts(1L)
+        .map(as => as.length mustBe accounts.length)
+
+    }
+
   }
 
 }

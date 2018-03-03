@@ -2,9 +2,15 @@ package service
 
 import cats.data.{EitherT, OptionT}
 import com.google.inject.Inject
+
 import scala.concurrent.Future
 import domain.User
-import persistence.repository.{UserRepositoryImpl}
+import persistence.repository.{
+  AccountRepository,
+  UserRepository,
+  UserRepositoryImpl
+}
+
 trait UserService {
 
   def create(user: User): EitherT[Future, Throwable, User]
@@ -13,13 +19,12 @@ trait UserService {
 
 }
 
-class UserServiceImpl @Inject()(userRep: UserRepositoryImpl)
-    extends UserService {
+class UserServiceImpl @Inject()(userRep: UserRepository) extends UserService {
 
-  override def create(user: User): EitherT[Future, Throwable, User] =
+  def create(user: User): EitherT[Future, Throwable, User] =
     userRep.create(user)
 
-  override def findById(id: Long): OptionT[Future, User] =
+  def findById(id: Long): OptionT[Future, User] =
     userRep.findById(id)
 
 }
